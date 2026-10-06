@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+actor Visitor
+actor Customer
+actor Administrator
+rectangle RideRent {
+  usecase "Register account" as UC1
+  usecase "Log in" as UC2
+  usecase "Search rental cars" as UC3
+  usecase "View car details" as UC4
+  usecase "Reserve rental car" as UC5
+  usecase "Manage reservations" as UC6
+  usecase "Create shared ride" as UC7
+  usecase "Search shared rides" as UC8
+  usecase "Join shared ride" as UC9
+  usecase "Manage vehicles" as UC10
+  usecase "Validate session" as UC11
+}
+Visitor --> UC1
+Visitor --> UC2
+Customer --> UC2
+Customer --> UC3
+Customer --> UC4
+Customer --> UC5
+Customer --> UC6
+Customer --> UC7
+Customer --> UC8
+Customer --> UC9
+Administrator --> UC10
+UC5 .> UC11 : <<include>>
+UC6 .> UC11 : <<include>>
+UC7 .> UC11 : <<include>>
+UC9 .> UC11 : <<include>>
+UC10 .> UC11 : <<include>>
+@enduml
