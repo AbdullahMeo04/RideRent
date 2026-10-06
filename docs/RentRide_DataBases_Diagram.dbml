@@ -1,0 +1,65 @@
+Table User [headercolor: #175e7a] {
+	user_id integer [ pk, increment, not null ]
+	name varchar(100) [ not null ]
+	email varchar(150) [ not null, unique ]
+	password varchar(255) [ not null ]
+	role varchar(20) [ not null ]
+	created_at timestamp [ not null, default: CURRENT_TIMESTAMP ]
+}
+
+Table Vehicle [headercolor: #175e7a] {
+	vehicle_id integer [ pk, increment, not null ]
+	brand varchar(50) [ not null ]
+	model varchar(50) [ not null ]
+	year integer [ not null ]
+	license_plate varchar(20) [ not null, unique ]
+	price_per_day decimal(10,2) [ not null ]
+	status varchar(20) [ not null ]
+}
+
+Table Reservation [headercolor: #175e7a] {
+	reservation_id integer [ pk, increment, not null ]
+	user_id integer [ not null ]
+	vehicle_id integer [ not null ]
+	start_date date [ not null ]
+	end_date date [ not null ]
+	status varchar(20) [ not null ]
+	created_at timestamp [ not null, default: CURRENT_TIMESTAMP ]
+}
+
+Table SharedRide [headercolor: #175e7a] {
+	ride_id integer [ pk, increment, not null ]
+	creator_id integer [ not null ]
+	origin varchar(150) [ not null ]
+	destination varchar(150) [ not null ]
+	departure_date date [ not null ]
+	departure_time time [ not null ]
+	available_seats integer [ not null ]
+	status varchar(20) [ not null ]
+}
+
+Table RideParticipant [headercolor: #175e7a] {
+	ride_id integer [ pk, not null ]
+	user_id integer [ pk, not null ]
+	joined_at timestamp [ not null, default: CURRENT_TIMESTAMP ]
+}
+
+Ref fk_Reservation_user_id_User {
+	Reservation.user_id > User.user_id [ delete: no action, update: no action ]
+}
+
+Ref fk_Reservation_vehicle_id_Vehicle {
+	Reservation.vehicle_id > Vehicle.vehicle_id [ delete: no action, update: no action ]
+}
+
+Ref fk_SharedRide_creator_id_User {
+	SharedRide.creator_id > User.user_id [ delete: no action, update: no action ]
+}
+
+Ref fk_RideParticipant_ride_id_SharedRide {
+	RideParticipant.ride_id > SharedRide.ride_id [ delete: no action, update: no action ]
+}
+
+Ref fk_RideParticipant_user_id_User {
+	RideParticipant.user_id > User.user_id [ delete: no action, update: no action ]
+}
